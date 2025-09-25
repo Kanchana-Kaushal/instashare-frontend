@@ -25,7 +25,7 @@ function DisplayQRPage() {
         url.split("/public/instaShare/")[1]
     }`;
 
-    const {
+    /*     const {
         register,
         handleSubmit,
         formState: { errors },
@@ -48,7 +48,7 @@ function DisplayQRPage() {
             console.log(err);
             toast.error("Something went wrong", { id: toastId });
         }
-    };
+    }; */
 
     const handleStopSharing = async () => {
         const toastId = toast.loading("Processing...");
@@ -86,16 +86,16 @@ function DisplayQRPage() {
             <QRCodeCanvas
                 value={displayURL}
                 size={250}
-                className="mx-auto mt-12"
+                className="mx-auto mt-16"
                 ref={canvasRef}
                 level={"L"}
             />
 
             <form
-                onSubmit={handleSubmit(onSubmit)}
+                /* onSubmit={handleSubmit(onSubmit)} */
                 className="space-y-6 my-8 p-4"
             >
-                <div>
+                {/* <div>
                     <div className="bg-custom-accent/20 p-3 relative rounded-full">
                         <input
                             type="text"
@@ -123,7 +123,7 @@ function DisplayQRPage() {
                             {errors.email.message}
                         </p>
                     )}
-                </div>
+                </div> */}
 
                 <button
                     type="button"
