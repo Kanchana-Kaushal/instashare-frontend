@@ -1,14 +1,14 @@
 import axios, { isAxiosError } from "axios";
 import { QRCodeCanvas } from "qrcode.react";
 import { useRef } from "react";
-import { useForm } from "react-hook-form";
+//import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaGithub } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router";
 
-type FormValues = {
+/* type FormValues = {
     email: string;
-};
+}; */
 
 function DisplayQRPage() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
