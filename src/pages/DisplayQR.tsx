@@ -76,7 +76,7 @@ function DisplayQRPage() {
     };
 
     return (
-        <main className="w-9/10 mx-auto">
+        <main className="w-9/10 mx-auto max-w-md">
             <img
                 src="/logo.png"
                 alt="insta share logo"

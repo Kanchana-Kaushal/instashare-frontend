@@ -8,6 +8,7 @@ import {
     Archive,
     File,
 } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
 
 import axios from "axios";
 
@@ -109,6 +110,16 @@ function DownloadPage() {
                         Download File
                     </a>
                 </div>
+            </div>
+
+            <div className="absolute bottom-0 w-full left-0  flex items-center justify-center">
+                <a
+                    href="https://github.com/Kanchana-Kaushal"
+                    className="flex items-center gap-2 my-4  font-bold"
+                    target="_blank"
+                >
+                    <FaGithub /> GitHub
+                </a>
             </div>
         </main>
     );

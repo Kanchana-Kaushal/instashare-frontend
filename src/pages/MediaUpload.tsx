@@ -66,17 +66,25 @@ function MediaUploadPage() {
     };
 
     return (
-        <main className="w-9/10 mx-auto text-gray-900">
+        <main className="w-9/10 mx-auto text-gray-900 max-w-md">
             <img
                 src="/logo.png"
                 alt="insta share logo"
-                className="w-45 mx-auto my-8"
+                className="w-45 mx-auto my-8 cursor-pointer"
+                onClick={() => {
+                    navigate("/home");
+                }}
             />
 
             <Card>
                 <CardHeader>
                     <CardTitle className="flex relative text-xl items-center">
-                        <IoIosArrowBack className="absolute" />
+                        <IoIosArrowBack
+                            className="absolute cursor-pointer hover:-translate-x-1 transition"
+                            onClick={() => {
+                                navigate("/home");
+                            }}
+                        />
                         <h1 className="w-full text-center">Upload</h1>
                     </CardTitle>
                 </CardHeader>
@@ -107,6 +115,20 @@ function MediaUploadPage() {
                                         onChange={(e) => {
                                             const selectedFile =
                                                 e.target.files?.[0] || null;
+
+                                            if (selectedFile) {
+                                                const maxSize =
+                                                    25 * 1024 * 1024; // 25MB in bytes
+                                                if (
+                                                    selectedFile.size > maxSize
+                                                ) {
+                                                    toast.error(
+                                                        "File size must be less than 25MB"
+                                                    );
+                                                    return;
+                                                }
+                                            }
+
                                             field.onChange(selectedFile);
                                         }}
                                     />

@@ -10,7 +10,10 @@ function Home() {
             <img
                 src="/logo.png"
                 alt="insta share logo"
-                className="w-45 mx-auto my-8"
+                className="w-45 mx-auto my-8 cursor-pointer"
+                onClick={() => {
+                    navigate("/home");
+                }}
             />
 
             <div className="mt-16">
@@ -30,7 +33,11 @@ function Home() {
             </div>
 
             <div className="absolute bottom-0">
-                <a href="" className="flex items-center gap-2 my-4  font-bold">
+                <a
+                    href="https://github.com/Kanchana-Kaushal"
+                    className="flex items-center gap-2 my-4  font-bold"
+                    target="_blank"
+                >
                     <FaGithub /> GitHub
                 </a>
             </div>
