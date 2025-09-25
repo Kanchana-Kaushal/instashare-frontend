@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import MediaUploadPage from "./pages/MediaUpload";
 import { Toaster } from "react-hot-toast";
 import DisplayQRPage from "./pages/DisplayQR";
+import DownloadPage from "./pages/DownloadPage";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/upload-media" element={<MediaUploadPage />} />
                 <Route path="/display-qr" element={<DisplayQRPage />} />
+                <Route path="/download/:filename" element={<DownloadPage />} />
                 <Route path="/*" element={<Home />} />
             </Routes>
         </>

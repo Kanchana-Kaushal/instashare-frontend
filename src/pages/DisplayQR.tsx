@@ -17,15 +17,37 @@ function DisplayQRPage() {
     const navigate = useNavigate();
     const url = location.state?.url;
 
+    if (!url) {
+        navigate("/home");
+    }
+
+    const displayURL = `${import.meta.env.VITE_FRONTEND_URL}/download/${
+        url.split("/public/instaShare/")[1]
+    }`;
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<FormValues>();
 
-    const onSubmit = (data: FormValues) => {
-        console.log("Send to email:", data.email);
-        // Here you can call your backend/email API
+    const onSubmit = async (data: FormValues) => {
+        const toastId = toast.loading("Sending....");
+
+        try {
+            await axios.post(
+                `${import.meta.env.VITE_BACKEND_URL}/api/files/send-email`,
+                {
+                    url: displayURL,
+                    email: data.email,
+                }
+            );
+
+            toast.success("Email sent succesfully", { id: toastId });
+        } catch (err) {
+            console.log(err);
+            toast.error("Something went wrong", { id: toastId });
+        }
     };
 
     const handleStopSharing = async () => {
@@ -62,7 +84,7 @@ function DisplayQRPage() {
             />
 
             <QRCodeCanvas
-                value={url}
+                value={displayURL}
                 size={250}
                 className="mx-auto mt-12"
                 ref={canvasRef}
