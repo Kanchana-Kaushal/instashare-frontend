@@ -1,16 +1,27 @@
 import axios, { isAxiosError } from "axios";
 import { QRCodeCanvas } from "qrcode.react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { FaGithub } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 type FormValues = {
     email: string;
 };
 
 function DisplayQRPage() {
+    const [alertOpen, setAlertOpen] = useState<boolean>(true);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     const location = useLocation();
@@ -44,6 +55,7 @@ function DisplayQRPage() {
             );
 
             toast.success("Email sent succesfully", { id: toastId });
+            setAlertOpen(true);
         } catch (err) {
             console.log(err);
             toast.error("Something went wrong", { id: toastId });
@@ -144,14 +156,32 @@ function DisplayQRPage() {
                 </button>
             </form>
 
-            <div className="absolute bottom-0 left-0 w-full">
-                <a
-                    href=""
-                    className="flex items-center justify-center gap-2 my-4   font-bold"
-                >
-                    <FaGithub /> GitHub
-                </a>
-            </div>
+            <AlertDialog open={alertOpen}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Notice</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            We've successfully sent the URL to the email address
+                            you entered. If you couldn't find the email in your
+                            inbox. Please check in the{" "}
+                            <span className="font-bold text-gray-900">
+                                spam
+                            </span>{" "}
+                            folder. Thank You!
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction
+                            className="cursor-pointer"
+                            onClick={() => {
+                                setAlertOpen(false);
+                            }}
+                        >
+                            Understood
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </main>
     );
 }
