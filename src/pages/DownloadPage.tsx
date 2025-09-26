@@ -8,9 +8,8 @@ import {
     Archive,
     File,
 } from "lucide-react";
-import { FaGithub } from "react-icons/fa";
-
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function DownloadPage() {
     const supabaseTemplate =
@@ -50,6 +49,7 @@ function DownloadPage() {
     const FileIcon = getFileIcon(extension);
 
     const HandleDownload = async () => {
+        const toastId = toast.loading("Downloading...");
         try {
             await axios.post(
                 `${import.meta.env.VITE_BACKEND_URL}/api/files/clearup`,
@@ -57,8 +57,24 @@ function DownloadPage() {
                     url: supabaseURL,
                 }
             );
+
+            // Fetch the file as a blob
+            const response = await fetch(supabaseURL);
+            const blob = await response.blob();
+
+            // Create a temporary link and trigger download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename; // filename for download
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url); // cleanup
+            toast.success("Download complete!", { id: toastId });
         } catch (err) {
             console.log(err);
+            toast.error("Download failed", { id: toastId });
         }
     };
 
@@ -101,27 +117,16 @@ function DownloadPage() {
                         </p>
 
                         {/* Download Button */}
-                        <a
-                            href={supabaseURL}
-                            download={filename}
+                        <button
                             onClick={HandleDownload}
-                            className="inline-flex items-center gap-3 bg-custom-accent text-white px-8 py-4 rounded-2xl font-bold hover:bg-custom-accent/90 transform  transition-all duration-200 "
+                            className="inline-flex items-center gap-3 bg-custom-accent text-white px-8 py-4 rounded-2xl font-bold hover:bg-custom-accent/90 transform  transition-all duration-200"
                         >
                             <Download className="w-5 h-5" />
                             Download File
-                        </a>
+                        </button>
                     </div>
                 </div>
             </main>
-            <div className="absolute bottom-0 w-full left-0  flex items-center justify-center">
-                <a
-                    href="https://github.com/Kanchana-Kaushal"
-                    className="flex items-center gap-2 my-4  font-bold"
-                    target="_blank"
-                >
-                    <FaGithub /> GitHub
-                </a>
-            </div>
         </>
     );
 }
