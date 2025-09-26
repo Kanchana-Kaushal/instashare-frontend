@@ -19,7 +19,7 @@ type FormValues = {
 };
 
 function DisplayQRPage() {
-    const [alertOpen, setAlertOpen] = useState<boolean>(true);
+    const [alertOpen, setAlertOpen] = useState<boolean>(false);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     const location = useLocation();
