@@ -4,8 +4,25 @@ import MediaUploadPage from "./pages/MediaUpload";
 import { Toaster } from "react-hot-toast";
 import DisplayQRPage from "./pages/DisplayQR";
 import DownloadPage from "./pages/DownloadPage";
+import { useEffect } from "react";
+import axios from "axios";
 
 function App() {
+    useEffect(() => {
+        const wakeUpBackend = async () => {
+            try {
+                await axios.get(
+                    `${import.meta.env.VITE_BACKEND_URL}/api/files/wake-up`
+                );
+                console.log("Backend wake-up successful");
+            } catch (err) {
+                console.error("Wake-up failed:", err);
+            }
+        };
+
+        wakeUpBackend();
+    }, []);
+
     return (
         <>
             <Toaster position="top-center" />
